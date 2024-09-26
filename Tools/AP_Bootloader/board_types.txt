@@ -320,6 +320,7 @@ AP_HW_CUBERED_PERIPH                 1409
 AP_HW_RadiolinkPIX6                  1410
 
 AP_HW_JHEMCU-H743HD                  1411
+AP_HW_JHEMCU-GHF745AIO               1412
 
 AP_HW_LongbowF405                    1422
 
