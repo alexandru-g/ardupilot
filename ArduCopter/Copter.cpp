@@ -209,6 +209,9 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
     SCHED_TASK(lost_vehicle_check,    10,     50,  99),
     SCHED_TASK_CLASS(GCS,                  (GCS*)&copter._gcs,          update_receive, 400, 180, 102),
     SCHED_TASK_CLASS(GCS,                  (GCS*)&copter._gcs,          update_send,    400, 550, 105),
+#if AP_HEADTRACKER_ENABLED
+    SCHED_TASK_CLASS(AP_Headtracker,       &copter.headtracker,         update,          50,  50, 105),
+#endif
 #if HAL_MOUNT_ENABLED
     SCHED_TASK_CLASS(AP_Mount,             &copter.camera_mount,        update,          50,  75, 108),
 #endif

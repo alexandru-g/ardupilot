@@ -26,6 +26,7 @@
 #include <AP_VideoTX/AP_VideoTX_config.h>
 #include <AP_Arming/AP_Arming_config.h>
 #include <AP_BattMonitor/AP_BattMonitor_config.h>
+#include <AP_Headtracker/AP_Headtracker_config.h>
 
 #define NUM_RC_CHANNELS 16
 
@@ -395,6 +396,9 @@ public:
         TRANSMITTER_TUNING = 219, // use a transmitter knob or slider for in-flight tuning
         TRANSMITTER_TUNING2 = 220, // use another transmitter knob or slider for in-flight tuning
 #endif  // AP_RC_TRANSMITTER_TUNING_ENABLED
+#if AP_HEADTRACKER_ENABLED
+        HEADTRACKER_ENABLE = 221, // enable/disable headtracker
+#endif  // AP_HEADTRACKER_ENABLED
 
         // inputs 248-249 are reserved for the Skybrush fork at
         // https://github.com/skybrush-io/ardupilot
@@ -509,6 +513,7 @@ protected:
     void do_aux_function_generator(const AuxSwitchPos ch_flag);
     void do_aux_function_fft_notch_tune(const AuxSwitchPos ch_flag);
     void do_aux_function_retract_mount(const AuxSwitchPos ch_flag, const uint8_t instance);
+    void do_aux_function_headtracker(const AuxSwitchPos ch_flag);
 
     typedef int8_t modeswitch_pos_t;
     virtual void mode_switch_changed(modeswitch_pos_t new_pos) {

@@ -104,8 +104,11 @@ const AP_Scheduler::Task Rover::scheduler_tasks[] = {
 #if AC_PRECLAND_ENABLED
     SCHED_TASK(update_precland,      400,     50,  70),
 #endif
+#if AP_HEADTRACKER_ENABLED
+    SCHED_TASK_CLASS(AP_Headtracker,      &rover.headtracker,      update,         50,   50,  75),
+#endif
 #if HAL_MOUNT_ENABLED
-    SCHED_TASK_CLASS(AP_Mount,            &rover.camera_mount,     update,         50,  200,  75),
+    SCHED_TASK_CLASS(AP_Mount,            &rover.camera_mount,     update,         50,  200,  76),
 #endif
 #if AP_CAMERA_ENABLED
     SCHED_TASK_CLASS(AP_Camera,           &rover.camera,           update,         50,  200,  78),

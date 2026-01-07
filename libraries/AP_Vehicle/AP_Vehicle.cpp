@@ -289,6 +289,11 @@ const AP_Param::GroupInfo AP_Vehicle::var_info[] = {
     // @Path: ../AP_RPM/AP_RPM.cpp
     AP_SUBGROUPINFO(rpm_sensor, "RPM", 32, AP_Vehicle, AP_RPM),
 #endif
+#if AP_HEADTRACKER_ENABLED
+    // @Group: HEAD
+    // @Path: ../AP_Headtracker/AP_Headtracker.cpp
+    AP_SUBGROUPINFO(headtracker, "HEAD", 33, AP_Vehicle, AP_Headtracker),
+#endif
 
     AP_GROUPEND
 };

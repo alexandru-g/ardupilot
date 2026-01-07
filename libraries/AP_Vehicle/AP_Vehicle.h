@@ -56,6 +56,7 @@
 #include <AP_VisualOdom/AP_VisualOdom.h>
 #include <AP_VideoTX/AP_VideoTX.h>
 #include <AP_MSP/AP_MSP.h>
+#include <AP_Headtracker/AP_Headtracker.h>
 #include <AP_Frsky_Telem/AP_Frsky_Parameters.h>
 #include <AP_ExternalAHRS/AP_ExternalAHRS.h>
 #include <AP_VideoTX/AP_SmartAudio.h>
@@ -384,6 +385,10 @@ protected:
 #endif
 #if AP_VIDEOTX_ENABLED
     AP_VideoTX vtx;
+#endif
+
+#if AP_HEADTRACKER_ENABLED
+    AP_Headtracker headtracker;
 #endif
 
 #if AP_SERIALMANAGER_ENABLED

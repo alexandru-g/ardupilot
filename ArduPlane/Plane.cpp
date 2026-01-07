@@ -102,8 +102,11 @@ const AP_Scheduler::Task Plane::scheduler_tasks[] = {
 #if AP_AIRSPEED_AUTOCAL_ENABLE
     SCHED_TASK(airspeed_ratio_update,   1,    100,  102),
 #endif // AP_AIRSPEED_AUTOCAL_ENABLE
+#if AP_HEADTRACKER_ENABLED
+    SCHED_TASK_CLASS(AP_Headtracker, &plane.headtracker, update, 50, 50, 105),
+#endif
 #if HAL_MOUNT_ENABLED
-    SCHED_TASK_CLASS(AP_Mount, &plane.camera_mount, update, 50, 100, 105),
+    SCHED_TASK_CLASS(AP_Mount, &plane.camera_mount, update, 50, 100, 106),
 #endif // HAL_MOUNT_ENABLED
 #if AP_CAMERA_ENABLED
     SCHED_TASK_CLASS(AP_Camera, &plane.camera, update,      50, 100, 108),

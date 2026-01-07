@@ -58,6 +58,7 @@ extern const AP_HAL::HAL& hal;
 #include <AP_Notify/AP_Notify.h>
 #include <AP_VideoTX/AP_VideoTX.h>
 #include <AP_Torqeedo/AP_Torqeedo.h>
+#include <AP_Headtracker/AP_Headtracker.h>
 #include <AP_Vehicle/AP_Vehicle_Type.h>
 #include <AP_Parachute/AP_Parachute_config.h>
 #include <AP_Scripting/AP_Scripting.h>
@@ -261,6 +262,7 @@ const AP_Param::GroupInfo RC_Channel::var_info[] = {
     // @Values{Copter, Rover, Plane, Sub}: 212:Mount1 Roll, 213:Mount1 Pitch, 214:Mount1 Yaw, 215:Mount2 Roll, 216:Mount2 Pitch, 217:Mount2 Yaw
     // @Values{Copter, Rover, Plane, Blimp, Sub}:  218:Loweheiser throttle
     // @Values{Copter}: 219:Transmitter Tuning
+    // @Values{All-Vehicles}: 221:Headtracker Enable
     // @Values{All-Vehicles}: 300:Scripting1, 301:Scripting2, 302:Scripting3, 303:Scripting4, 304:Scripting5, 305:Scripting6, 306:Scripting7, 307:Scripting8, 308:Scripting9, 309:Scripting10, 310:Scripting11, 311:Scripting12, 312:Scripting13, 313:Scripting14, 314:Scripting15, 315:Scripting16
     // @Values{All-Vehicles}: 316:Stop-Restart Scripting
     // @User: Standard
@@ -1677,6 +1679,12 @@ bool RC_Channel::do_aux_function(const AuxFuncTrigger &trigger)
         break;
 #endif
 
+#if AP_HEADTRACKER_ENABLED
+    case AUX_FUNC::HEADTRACKER_ENABLE:
+        do_aux_function_headtracker(ch_flag);
+        break;
+#endif
+
 #if AP_AHRS_ENABLED
     case AUX_FUNC::EKF_SOURCE_SET: {
         AP_NavEKF_Source::SourceSetSelection source_set = AP_NavEKF_Source::SourceSetSelection::PRIMARY;
@@ -2091,5 +2099,26 @@ void RC_Channels::convert_options(const RC_Channel::AUX_FUNC old_option, const R
         }
     }
 }
+
+#if AP_HEADTRACKER_ENABLED
+void RC_Channel::do_aux_function_headtracker(const AuxSwitchPos ch_flag)
+{
+    AP_Headtracker *headtracker = AP_Headtracker::get_singleton();
+    if (headtracker == nullptr) {
+        return;
+    }
+    switch (ch_flag) {
+    case AuxSwitchPos::HIGH:
+        headtracker->set_enabled(true);
+        break;
+    case AuxSwitchPos::MIDDLE:
+        // no change
+        break;
+    case AuxSwitchPos::LOW:
+        headtracker->set_enabled(false);
+        break;
+    }
+}
+#endif
 
 #endif  // AP_RC_CHANNEL_ENABLED

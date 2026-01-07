@@ -113,6 +113,11 @@ void Copter::init_ardupilot()
     camera_mount.init();
 #endif
 
+#if AP_HEADTRACKER_ENABLED
+    // initialise headtracker
+    headtracker.init();
+#endif
+
 #if AP_CAMERA_ENABLED
     // initialise camera
     camera.init();
